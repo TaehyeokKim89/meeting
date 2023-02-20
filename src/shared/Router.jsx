@@ -10,7 +10,7 @@ function Router() {
             <Routes>
                 <Route path="/" element={<List />} />
                 <Route path="/input" element={<Input />} />
-                <Route path="/detail" element={<Detail />} />
+                <Route path="/list/:id" element={<Detail />} />
             </Routes>
         </BrowserRouter>
     );
