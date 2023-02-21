@@ -1,22 +1,21 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import Header from '../components/Header';
 import Button from '../components/Button';
 import styled from 'styled-components';
+import { getMeetings } from '../api/meetings';
+import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 
 function List() {
     const navigate = useNavigate();
 
-    const meetings = useSelector((state) => {
-        return state.meetingsSlice;
-    });
-    console.log(meetings);
+    const { isLoading, isError, data } = useQuery('meetings', getMeetings);
+
     return (
         <>
             <Header.ListHeader />
             <StListContainer>
-                {meetings.map((item) => {
+                {data?.map((item) => {
                     return (
                         <StListBox key={item.id}>
                             <div>{item.name}</div>

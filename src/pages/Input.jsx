@@ -1,42 +1,65 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useInputs } from '../hooks/Inputs';
 import Header from '../components/Header';
-import nextId from 'react-id-generator/lib';
-import { useDispatch } from 'react-redux';
-import { addMeeting } from '../redux/config/modules/meetingsSlice';
 import { useNavigate } from 'react-router-dom';
+import { addMeetings } from '../api/meetings';
+import { useMutation, useQueryClient } from 'react-query';
 
 function Input() {
-    const [meetingName, setMeetingName] = useInputs('');
-    const [whenMeeting, setWhenMeeting] = useInputs('');
-    const [whereMeeting, setWhereMeeting] = useInputs('');
-    const [detailMeeting, setDetailMeeting] = useInputs('');
+    const queryClient = useQueryClient();
+    const mutation = useMutation(addMeetings, {
+        onSuccess: () => {
+            queryClient.invalidateQueries('meetings');
+        },
+    });
 
-    const dispatch = useDispatch();
+    const [meetingName, onNameHandler, setMeetingName] = useInputs('');
+    const [whenMeeting, onWhenHandler, setWhenMeeting] = useInputs('');
+    const [whereMeeting, onWhereHandler, setWhereMeeting] = useInputs('');
+    const [detailMeeting, onDetailHandler, setDetailMeeting] = useInputs('');
+
+    // const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const randomId = nextId();
-    const newId = parseInt(randomId.replace(/[^0-9]/g, ''));
+    // const randomId = nextId();
+    // const newId = parseInt(randomId.replace(/[^0-9]/g, ''));
 
     const onSubmitHandler = (event) => {
-        event.preventDefault();
-
-        const meeting = {
-            id: newId + 1,
+        const newMeeting = {
             name: meetingName,
             when: whenMeeting,
-            where: whereMeeting,
+            where: whenMeeting,
             desc: detailMeeting,
             isDone: false,
         };
-
-        dispatch(addMeeting({ ...meeting }));
+        event.preventDefault();
+        mutation.mutate(newMeeting);
         setMeetingName('');
         setWhenMeeting('');
         setWhereMeeting('');
         setDetailMeeting('');
         navigate('/');
     };
+
+    // const onSubmitHandler = (event) => {
+    //     event.preventDefault();
+
+    //     const meeting = {
+    //         id: newId + 1,
+    //         name: meetingName,
+    //         when: whenMeeting,
+    //         where: whereMeeting,
+    //         desc: detailMeeting,
+    //         isDone: false,
+    //     };
+
+    //     dispatch(addMeeting({ ...meeting }));
+    //     setMeetingName('');
+    //     setWhenMeeting('');
+    //     setWhereMeeting('');
+    //     setDetailMeeting('');
+    //     navigate('/');
+    // };
 
     return (
         <>
@@ -45,23 +68,19 @@ function Input() {
                 <div>
                     <div>
                         무슨 모임?
-                        <input type="text" value={meetingName || ''} onChange={setMeetingName} />
+                        <input type="text" value={meetingName} onChange={onNameHandler} />
                     </div>
                     <div>
                         언제 모일까?
-                        <input type="text" value={whenMeeting || ''} onChange={setWhenMeeting} />
+                        <input type="text" value={whenMeeting} onChange={onWhenHandler} />
                     </div>
                     <div>
                         어디서 모일까?
-                        <input type="text" value={whereMeeting || ''} onChange={setWhereMeeting} />
+                        <input type="text" value={whereMeeting} onChange={onWhereHandler} />
                     </div>
                     <div>
                         어떤 모임인지 자세히 적어줘!
-                        <input
-                            type="text"
-                            value={detailMeeting || ''}
-                            onChange={setDetailMeeting}
-                        />
+                        <input type="text" value={detailMeeting} onChange={onDetailHandler} />
                     </div>
                     <div>
                         <button>모임 만들기</button>

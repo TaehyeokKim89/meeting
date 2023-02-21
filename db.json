@@ -1,0 +1,20 @@
+{
+    "meetings": [
+        {
+            "id": 1,
+            "name": "손흥민",
+            "when": "2023년 2월 21일",
+            "where": "동네 축구장",
+            "desc": "22명 모이면 마감하겠습니다!",
+            "isDone": false
+        },
+        {
+            "name": "2",
+            "when": "2",
+            "where": "2",
+            "desec": "2",
+            "isDone": false,
+            "id": 2
+        }
+    ]
+}
