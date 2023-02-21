@@ -1,20 +1,36 @@
 {
-    "meetings": [
-        {
-            "id": 1,
-            "name": "손흥민",
-            "when": "2023년 2월 21일",
-            "where": "동네 축구장",
-            "desc": "22명 모이면 마감하겠습니다!",
-            "isDone": false
-        },
-        {
-            "name": "2",
-            "when": "2",
-            "where": "2",
-            "desec": "2",
-            "isDone": false,
-            "id": 2
-        }
-    ]
+  "meetings": [
+    {
+      "id": 1,
+      "name": "박지성",
+      "when": "2023년 2월 21일",
+      "where": "동네 축구장",
+      "desc": "22명 모이면 마감하겠습니다!",
+      "isDone": true
+    },
+    {
+      "name": "123",
+      "when": "123",
+      "where": "123",
+      "desc": "123",
+      "isDone": true,
+      "id": 2
+    },
+    {
+      "name": "4",
+      "when": "4",
+      "where": "4",
+      "desc": "4",
+      "isDone": false,
+      "id": 3
+    },
+    {
+      "name": "6",
+      "when": "6",
+      "where": "6",
+      "desc": "6",
+      "isDone": false,
+      "id": 4
+    }
+  ]
 }

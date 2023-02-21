@@ -11,6 +11,14 @@ function List() {
 
     const { isLoading, isError, data } = useQuery('meetings', getMeetings);
 
+    if (isLoading) {
+        return <div>로딩 중입니다</div>;
+    }
+
+    if (isError) {
+        return <div>에러 발생!</div>;
+    }
+
     return (
         <>
             <Header.ListHeader />

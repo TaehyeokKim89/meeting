@@ -18,11 +18,7 @@ function Input() {
     const [whereMeeting, onWhereHandler, setWhereMeeting] = useInputs('');
     const [detailMeeting, onDetailHandler, setDetailMeeting] = useInputs('');
 
-    // const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    // const randomId = nextId();
-    // const newId = parseInt(randomId.replace(/[^0-9]/g, ''));
 
     const onSubmitHandler = (event) => {
         const newMeeting = {

@@ -1,35 +1,50 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import { Switch } from '@mui/material';
-import { editMeeting } from '../redux/config/modules/meetingsSlice';
 import Button from '../components/Button';
-import { deleteMeeting } from '../redux/config/modules/meetingsSlice';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { getMeetings, deleteMeetings } from '../api/meetings';
+import axios from 'axios';
 
 function Detail() {
     const params = useParams();
-    const dispatch = useDispatch();
     const navigate = useNavigate();
+    const queryClient = useQueryClient();
 
-    const meetings = useSelector((state) => {
-        return state.meetingsSlice;
+    const { isLoading, isError, data } = useQuery('meetings', getMeetings);
+
+    const editMeetings = async (id) => {
+        await axios.patch(`${process.env.REACT_APP_SERVER_URL}/meetings/${id}`, {
+            isDone: !foundMeeting.isDone,
+        }); //editMeetings를 api에 몰고 싶은데 isDone 처리가 안됨
+    };
+
+    const mutation = useMutation(deleteMeetings, {
+        onSuccess: () => {
+            queryClient.invalidateQueries('meetings');
+            navigate('/');
+        },
     });
 
-    const foundMeeting = meetings.find((item) => {
+    const mutation2 = useMutation(editMeetings, {
+        onSuccess: () => {
+            queryClient.invalidateQueries('meetings');
+        },
+    });
+
+    const foundMeeting = data.find((item) => {
         return item.id === parseInt(params.id);
     });
-
-    const [checked, setChecked] = React.useState(!foundMeeting.isDone);
+    const [checked, setChecked] = useState(!foundMeeting.isDone);
 
     const handleChange = (event) => {
         setChecked(event.target.checked);
-        dispatch(editMeeting(foundMeeting.id));
+        mutation2.mutate(foundMeeting.id);
     };
 
     const deleteButtonHandler = (id) => {
-        dispatch(deleteMeeting(id));
-        navigate('/');
+        mutation.mutate(id);
     };
 
     return (

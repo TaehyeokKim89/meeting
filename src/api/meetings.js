@@ -6,8 +6,11 @@ const getMeetings = async () => {
 };
 
 const addMeetings = async (newMeeting) => {
-    console.log(newMeeting);
     await axios.post(`${process.env.REACT_APP_SERVER_URL}/meetings`, newMeeting);
 };
 
-export { getMeetings, addMeetings };
+const deleteMeetings = async (id) => {
+    await axios.delete(`${process.env.REACT_APP_SERVER_URL}/meetings/${id}`);
+};
+
+export { getMeetings, addMeetings, deleteMeetings };
