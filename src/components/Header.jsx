@@ -7,7 +7,7 @@ function HeaderMain() {
         <>
             <StHeader>
                 <Button.HomeButton>처음으로</Button.HomeButton>
-                <div>Title</div>
+                <StTitle>뭉치면 산다</StTitle>
             </StHeader>
         </>
     );
@@ -20,7 +20,8 @@ function HeaderList() {
                     <Button.HomeButton>처음으로</Button.HomeButton>
                     <Button.MakeButton>모임 만들기</Button.MakeButton>
                 </div>
-                <div>Title</div>
+
+                <StTitle>뭉치면 산다</StTitle>
             </StHeader>
         </>
     );
@@ -34,7 +35,17 @@ const Header = { MainHeader, ListHeader };
 export default Header;
 
 const StHeader = styled.div`
-    border: 1px solid black;
+    box-shadow: 1px 1px 1px;
     display: flex;
     justify-content: space-between;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+`;
+
+const StTitle = styled.div`
+    display: flex;
+    flex-direction: row;
+    font-size: 20px;
+    font-weight: 500;
 `;

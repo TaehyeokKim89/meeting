@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { getMeetings } from '../api/meetings';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
+import { StGoingDone, StGoingDone2 } from '../components/styled';
 
 function List() {
     const navigate = useNavigate();
@@ -26,25 +27,38 @@ function List() {
                 {data?.map((item) => {
                     return (
                         <StListBox key={item.id}>
-                            <div>{item.name}</div>
-                            <div>{item.when}</div>
-                            <div>{item.where}</div>
-                            <div>{item.isDone ? '완료됨' : '진행중'}</div>
+                            <StListBoxLayout>
+                                <StList>
+                                    <h3>{item.name}</h3>
+                                    <h5>{item.when}</h5>
+                                    <h5>{item.where}</h5>
 
-                            <div>
-                                <Button.MultiButton
-                                    onClick={() => {
-                                        navigate(`/list/${item.id}`);
-                                    }}
-                                >
-                                    자세히 보기
-                                </Button.MultiButton>
-                            </div>
+                                    <div>
+                                        <Button.MultiButton
+                                            onClick={() => {
+                                                navigate(`/list/${item.id}`);
+                                            }}
+                                        >
+                                            자세히 보기
+                                        </Button.MultiButton>
+                                    </div>
+                                </StList>
+                                <div>
+                                    <StGoingDone>{item.isDone ? '🔴' : '🟢'}</StGoingDone>
+                                    <StGoingDone2>{item.isDone ? '마감' : '모집중'}</StGoingDone2>
+                                </div>
+                            </StListBoxLayout>
                         </StListBox>
                     );
                 })}
 
-                <Button.MakeButton>더하기</Button.MakeButton>
+                <StPlusBtn
+                    onClick={() => {
+                        navigate(`/input`);
+                    }}
+                >
+                    <h2>➕</h2>
+                </StPlusBtn>
             </StListContainer>
         </>
     );
@@ -53,14 +67,41 @@ function List() {
 export default List;
 
 const StListBox = styled.div`
-    width: 180px;
-    height: 150px;
-    border: 1px solid black;
+    min-width: 300px;
+    min-height: 250px;
     margin: 10px;
+    border-radius: 3px;
+    box-shadow: 2px 2px 2px 1px;
+    font-size: 19px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
 `;
 
 const StListContainer = styled.div`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+`;
+
+const StPlusBtn = styled.button`
+    min-width: 300px;
+    min-height: 240px;
+    margin: 10px;
+    border-radius: 3px;
+    box-shadow: 2px 2px 2px 1px;
+    font-size: 30px;
+    cursor: pointer;
+    background-color: aliceblue;
+`;
+
+const StListBoxLayout = styled.div`
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    width: 280px;
+`;
+const StList = styled.div`
+    width: 200px;
+    margin: 3px;
 `;

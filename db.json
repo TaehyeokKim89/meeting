@@ -1,36 +1,20 @@
 {
   "meetings": [
     {
-      "id": 1,
-      "name": "박지성",
-      "when": "2023년 2월 21일",
-      "where": "동네 축구장",
-      "desc": "22명 모이면 마감하겠습니다!",
-      "isDone": true
+      "name": "축구 합시다",
+      "when": "2023-02-25",
+      "where": "서울 상암 월드컵 경기장 보조 축구장",
+      "desc": "정식 축구 11vs11\n5명 더 모집합니다!! 연락 주세요!!",
+      "isDone": false,
+      "id": 1
     },
     {
-      "name": "123",
-      "when": "123",
-      "where": "123",
-      "desc": "123",
+      "name": "맛집 가실분",
+      "when": "2023-02-25",
+      "where": "경기 남부 일대",
+      "desc": "함께 맛집 가요 !!",
       "isDone": true,
       "id": 2
-    },
-    {
-      "name": "4",
-      "when": "4",
-      "where": "4",
-      "desc": "4",
-      "isDone": false,
-      "id": 3
-    },
-    {
-      "name": "6",
-      "when": "6",
-      "where": "6",
-      "desc": "6",
-      "isDone": false,
-      "id": 4
     }
   ]
 }
