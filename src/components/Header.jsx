@@ -6,7 +6,10 @@ function HeaderMain() {
     return (
         <>
             <StHeader>
-                <Button.HomeButton>처음으로</Button.HomeButton>
+                <div>
+                    <Button.LogOutButton />
+                    <Button.HomeButton>처음으로</Button.HomeButton>
+                </div>
                 <StTitle>뭉치면 산다</StTitle>
             </StHeader>
         </>
@@ -17,8 +20,9 @@ function HeaderList() {
         <>
             <StHeader>
                 <div>
-                    <Button.HomeButton>처음으로</Button.HomeButton>
+                    <Button.LogOutButton />
                     <Button.MakeButton>모임 만들기</Button.MakeButton>
+                    <Button.HomeButton>처음으로</Button.HomeButton>
                 </div>
 
                 <StTitle>뭉치면 산다</StTitle>
@@ -27,10 +31,21 @@ function HeaderList() {
     );
 }
 
+function HeaderLogin() {
+    return (
+        <>
+            <StHeader>
+                <StTitle>뭉치면 산다</StTitle>
+            </StHeader>
+        </>
+    );
+}
+
+const LoginHeader = HeaderLogin;
 const MainHeader = HeaderMain;
 const ListHeader = HeaderList;
 
-const Header = { MainHeader, ListHeader };
+const Header = { MainHeader, ListHeader, LoginHeader };
 
 export default Header;
 

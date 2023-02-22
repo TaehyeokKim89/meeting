@@ -20,7 +20,7 @@ function Detail() {
     const editMeetings = async (id) => {
         await axios.patch(`${process.env.REACT_APP_SERVER_URL}/meetings/${id}`, {
             isDone: !foundMeeting.isDone,
-        }); //editMeetings를 api에 몰고 싶은데 isDone 처리가 안됨
+        });
     };
 
     const mutation = useMutation(deleteMeetings, {

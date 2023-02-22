@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import Cookies from 'js-cookie';
 
 const HomeButton = (props) => {
     const navigate = useNavigate();
@@ -16,10 +17,24 @@ const MultiButton = (props) => {
     return <StMultiButton {...props}>{props.children}</StMultiButton>;
 };
 
-const Button = { HomeButton, MakeButton, MultiButton };
+const LogOutButton = (props) => {
+    const navigate3 = useNavigate();
+    return (
+        <StBtn
+            onClick={() => {
+                Cookies.remove('token');
+                navigate3('/login');
+            }}
+        >
+            로그 아웃
+        </StBtn>
+    );
+};
+
+const Button = { HomeButton, MakeButton, MultiButton, LogOutButton };
 export default Button;
 
-const StBtn = styled.button`
+export const StBtn = styled.button`
     width: 100px;
     height: 40px;
     border-radius: 5px;

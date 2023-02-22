@@ -8,8 +8,8 @@ const queryClient = new QueryClient();
 function App() {
     return (
         <>
+            <GlobalStyle />
             <QueryClientProvider client={queryClient}>
-                <GlobalStyle />
                 <Router />
             </QueryClientProvider>
         </>
