@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from '../components/Header';
 import Button from '../components/Button';
 import styled from 'styled-components';
@@ -6,10 +6,31 @@ import { getMeetings } from '../api/meetings';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { StGoingDone, StGoingDone2 } from '../components/styled';
+import Cookies from 'js-cookie';
+import axios from 'axios';
 
 function List() {
     const navigate = useNavigate();
 
+    const token = Cookies.get('token');
+    useEffect(() => {
+        authCheck();
+    }, []);
+
+    const authCheck = async () => {
+        try {
+            await axios.get('http://3.38.191.164/user', {
+                headers: {
+                    authorization: `Bearer ${token}`,
+                },
+            });
+        } catch (error) {
+            if (error.response.status === 401) {
+                alert('로그인 시간이 만료되었습니다. 다시 로그인 해주세요!');
+                navigate('/login');
+            }
+        }
+    };
     const { isLoading, isError, data } = useQuery('meetings', getMeetings);
 
     if (isLoading) {
