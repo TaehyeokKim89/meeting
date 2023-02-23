@@ -24,7 +24,6 @@ const useAuthorization = () => {
                 },
             });
         } catch (error) {
-            console.log(error.response.data);
             if (error.response.status === 401) {
                 alert('토큰이 만료되었거나 없습니다. 로그인 해주세요!');
                 Cookies.remove('token');

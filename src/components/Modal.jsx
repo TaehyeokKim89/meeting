@@ -25,7 +25,7 @@ function Modal() {
             when: whenMeeting,
             where: whereMeeting,
             desc: detailMeeting,
-        }); //editMeetings를 api에 몰고 싶은데 isDone 처리가 안됨
+        });
         handleCloseModal();
     };
 
