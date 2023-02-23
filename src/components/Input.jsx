@@ -1,6 +1,5 @@
 import React from 'react';
 import { useInputs } from '../hooks/Inputs';
-import Header from './Header';
 import { useNavigate } from 'react-router-dom';
 import { addMeetings } from '../api/meetings';
 import { useMutation, useQueryClient } from 'react-query';

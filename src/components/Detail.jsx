@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import Header from './Header';
 import { Switch } from '@mui/material';
 import Button from './Button';
 import { useMutation, useQuery, useQueryClient } from 'react-query';

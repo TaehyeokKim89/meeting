@@ -18,7 +18,7 @@ const useAuthorization = () => {
 
     const authCheck = async () => {
         try {
-            await axios.get('http://3.38.191.164/user', {
+            await axios.get(`${process.env.REACT_APP_MOCK_URL} / user`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

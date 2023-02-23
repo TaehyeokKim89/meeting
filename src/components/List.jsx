@@ -1,5 +1,4 @@
 import React from 'react';
-import Header from './Header';
 import Button from './Button';
 import styled from 'styled-components';
 import { getMeetings } from '../api/meetings';
