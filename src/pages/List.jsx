@@ -14,8 +14,13 @@ function List() {
 
     const token = Cookies.get('token');
     useEffect(() => {
-        authCheck();
-    }, []);
+        if (token) {
+            authCheck();
+        } else {
+            alert('로그인이 필요합니다');
+            navigate('/login');
+        }
+    }, [token]);
 
     const authCheck = async () => {
         try {
@@ -25,6 +30,7 @@ function List() {
                 },
             });
         } catch (error) {
+            console.log(error.response.data);
             if (error.response.status === 401) {
                 alert('로그인 시간이 만료되었습니다. 다시 로그인 해주세요!');
                 navigate('/login');

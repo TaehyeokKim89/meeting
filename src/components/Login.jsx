@@ -21,7 +21,7 @@ function Login() {
             });
             const { token } = response.data;
 
-            Cookies.set('token', token, { expires: 1 / 24 });
+            Cookies.set('token', token, { expires: 1 / 24 / 60 });
 
             navigate('/');
         } catch (error) {
