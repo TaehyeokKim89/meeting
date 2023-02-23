@@ -98,9 +98,9 @@
 
 ---
 
-![[로그인.jpg]]
-![[회원가입.jpg]] 
-![[메인 리스트 화면.jpg]]
-![[모임 만들기.jpg]]
-![[모임 상세 화면.jpg]] 
-![[본문 수정 모달.jpg]]
+![로그인](https://user-images.githubusercontent.com/122258921/220844843-f3fc71dc-9d7a-429e-a7f7-3863bda06073.jpg)
+![회원가입](https://user-images.githubusercontent.com/122258921/220844870-956e9ff0-8065-4129-852a-46652decc8e2.jpg)
+![메인 리스트 화면](https://user-images.githubusercontent.com/122258921/220844886-ef73132d-c8a0-4771-a8f7-75337bb62587.jpg)
+![모임 만들기](https://user-images.githubusercontent.com/122258921/220844898-df9a70f9-6a54-473f-942c-0e2aeb941d00.jpg)
+![모임 상세 화면](https://user-images.githubusercontent.com/122258921/220844928-d48bb844-5813-4374-87aa-06449aab1bc5.jpg)
+![본문 수정 모달](https://user-images.githubusercontent.com/122258921/220844907-40d369a6-1f46-44cc-a38f-a49a9e89a888.jpg)
