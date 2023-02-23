@@ -29,7 +29,7 @@
       "when": "2023-02-26",
       "where": "한라산",
       "desc": "한라산 등반합시다!!",
-      "isDone": false,
+      "isDone": true,
       "id": 4
     }
   ]

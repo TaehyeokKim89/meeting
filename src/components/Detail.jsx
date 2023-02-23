@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import Header from '../components/Header';
+import Header from './Header';
 import { Switch } from '@mui/material';
-import Button from '../components/Button';
+import Button from './Button';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { getMeetings, deleteMeetings } from '../api/meetings';
 import axios from 'axios';
 import styled from 'styled-components';
-import { StGoingDone, StGoingDone2 } from '../components/styled';
-import Modal from '../components/Modal';
+import { StGoingDone, StGoingDone2 } from './styled';
+import Modal from './Modal';
+import useAuthorization from '../hooks/Auth';
 
 function Detail() {
+    useAuthorization();
     const params = useParams();
     const navigate = useNavigate();
     const queryClient = useQueryClient();
@@ -64,8 +66,6 @@ function Detail() {
 
     return (
         <>
-            <Header.ListHeader />
-
             <StDetailContainer>
                 <StDetailMeetingCtn>
                     <h5>ID : {foundMeeting.id}</h5>

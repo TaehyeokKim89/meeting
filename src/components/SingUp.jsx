@@ -1,15 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useInputs } from '../hooks/Inputs';
-import { StInput } from '../pages/Input';
+import { StInput } from './Input';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { StBtn } from './Button';
+import Cookies from 'js-cookie';
 
 function SingUp() {
     const [getId, onGetIdHandler, setGetId] = useInputs('');
     const [getPw, onGetPwHandler, setGetPw] = useInputs('');
+
     const navigate = useNavigate();
+    const getToken = Cookies.get('token');
+
+    useEffect(() => {
+        if (getToken) {
+            alert('로그인 중입니다.');
+            navigate('/');
+        }
+    }, [navigate, getToken]);
 
     const addRegister = async () => {
         try {
@@ -22,6 +32,7 @@ function SingUp() {
             alert(`${error.response.data.message}`);
         }
     };
+
     const signUpButtonHandler = (e) => {
         e.preventDefault();
         addRegister();
@@ -86,4 +97,13 @@ const StForm = styled.form`
     align-items: center;
     gap: 20px;
     background-color: #c3b9b9;
+`;
+
+const StDupBtnContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: white;
+    width: 400px;
+    margin-left: 50px;
 `;

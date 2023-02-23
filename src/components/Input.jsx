@@ -1,13 +1,15 @@
 import React from 'react';
 import { useInputs } from '../hooks/Inputs';
-import Header from '../components/Header';
+import Header from './Header';
 import { useNavigate } from 'react-router-dom';
 import { addMeetings } from '../api/meetings';
 import { useMutation, useQueryClient } from 'react-query';
 import styled from 'styled-components';
-import { StBtn } from '../components/styled';
+import { StBtn } from './styled';
+import useAuthorization from '../hooks/Auth';
 
 function Input() {
+    useAuthorization();
     const queryClient = useQueryClient();
     const mutation = useMutation(addMeetings, {
         onSuccess: () => {
@@ -40,7 +42,6 @@ function Input() {
     };
     return (
         <>
-            <Header.MainHeader />
             <form onSubmit={onSubmitHandler}>
                 <StInputContainer>
                     <div>

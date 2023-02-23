@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { StInput } from '../pages/Input';
+import { StInput } from './Input';
 import axios from 'axios';
 import { useInputs } from '../hooks/Inputs';
 import Cookies from 'js-cookie';
@@ -9,11 +9,20 @@ import { StBtn } from './Button';
 
 function Login() {
     const navigate = useNavigate();
+    const getToken = Cookies.get('token');
+
+    useEffect(() => {
+        if (getToken) {
+            alert('로그인 중입니다.');
+            navigate('/');
+        }
+    }, [navigate, getToken]);
 
     const [getId, onGetIdHandler, setGetId] = useInputs('');
     const [getPw, onGetPwHandler, setGetPw] = useInputs('');
 
     const logInData = async () => {
+        const expiryDate = new Date(Date.now() + 10 * 60 * 1000);
         try {
             const response = await axios.post('http://3.38.191.164/login', {
                 id: getId,
@@ -21,7 +30,7 @@ function Login() {
             });
             const { token } = response.data;
 
-            Cookies.set('token', token, { expires: 1 / 24 / 60 });
+            Cookies.set('token', token, { expires: expiryDate });
 
             navigate('/');
         } catch (error) {

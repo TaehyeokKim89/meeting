@@ -1,25 +1,39 @@
-import { useState, useEffect } from 'react';
-import jwt_decode from 'jwt-decode';
-import Cookies from 'js-cookie';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const useAuthorization = () => {
-    const [isAuthorized, setIsAuthorized] = useState(false);
-
+    const navigate = useNavigate();
     const token = Cookies.get('token');
-    const authCheck = async () => {
-        await axios.get('http://3.38.191.164/login/user', {
-            headers: {
-                authorization: `Bearer ${token}`,
-            },
-        });
-    };
 
     useEffect(() => {
-        authCheck();
-    }, [token]);
+        if (!token) {
+            alert('로그인이 필요합니다');
+            navigate('/login');
+        } else {
+            authCheck();
+        }
+    }, [navigate, token]);
 
-    return { isLogin: boolean(token) };
+    const authCheck = async () => {
+        try {
+            await axios.get('http://3.38.191.164/user', {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+        } catch (error) {
+            console.log(error.response.data);
+            if (error.response.status === 401) {
+                alert('토큰이 만료되었거나 없습니다. 로그인 해주세요!');
+                Cookies.remove('token');
+                navigate('/login');
+            }
+        }
+    };
+
+    return [token];
 };
 
 export default useAuthorization;

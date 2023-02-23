@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import styled from 'styled-components';
-import { StInputContainer, StInput, StTextArea } from '../pages/Input';
+import { StInputContainer, StInput, StTextArea } from './Input';
 import { StBtn } from './styled';
 import { getMeetings } from '../api/meetings';
 import { useParams } from 'react-router-dom';
