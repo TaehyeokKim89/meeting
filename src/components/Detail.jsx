@@ -129,7 +129,6 @@ const StDetailMeetingCtn = styled.div`
 const StCheckContainer = styled.div`
     width: 80px;
     height: 470px;
-    /* background-color: palegoldenrod; */
     display: flex;
     flex-direction: column;
     align-items: center;
