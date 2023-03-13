@@ -6,12 +6,12 @@ import axios from 'axios';
 //     return response.data;
 // };
 
-const addMeetings = async (newMeeting) => {
-    await axios.post(`${process.env.REACT_APP_SERVER_URL}/meetings`, newMeeting);
-};
+// const addMeetings = async (newMeeting) => {
+//     await axios.post(`${process.env.REACT_APP_SERVER_URL}/meetings`, newMeeting);
+// };
 
-const deleteMeetings = async (id) => {
-    await axios.delete(`${process.env.REACT_APP_SERVER_URL}/meetings/${id}`);
-};
+// const deleteMeetings = async (id) => {
+//     await axios.delete(`${process.env.REACT_APP_SERVER_URL}/meetings/${id}`);
+// };
 
-export { addMeetings, deleteMeetings };
+// export { deleteMeetings };

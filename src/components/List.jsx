@@ -4,9 +4,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { StGoingDone, StGoingDone2 } from './styled';
 import { __getMeetings } from '../redux/config/modules/meetingsSlice';
-import { getMeetings } from '../api/meetings';
 import { useDispatch, useSelector } from 'react-redux';
-import { useQuery } from 'react-query';
 function List() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -14,7 +12,7 @@ function List() {
 
     useEffect(() => {
         dispatch(__getMeetings());
-    }, []);
+    }, [dispatch]);
 
     const { isLoading, error, meetings } = useSelector((state) => {
         return state.meetingsSlice;
@@ -23,50 +21,52 @@ function List() {
     if (isLoading) {
         return <div>로딩 중입니다</div>;
     }
-
     if (error) {
         return <div>에러 발생!</div>;
     }
-
     return (
         <>
-            <StListContainer>
-                {meetings?.map((item) => {
-                    return (
-                        <StListBox key={item.id}>
-                            <StListBoxLayout>
-                                <StList>
-                                    <h3>{item.name}</h3>
-                                    <h5>{item.when}</h5>
-                                    <h5>{item.where}</h5>
+            {meetings && (
+                <StListContainer>
+                    {meetings?.map((item) => {
+                        return (
+                            <StListBox key={item.id}>
+                                <StListBoxLayout>
+                                    <StList>
+                                        <h3>{item.name}</h3>
+                                        <h5>{item.when}</h5>
+                                        <h5>{item.where}</h5>
 
+                                        <div>
+                                            <Button.MultiButton
+                                                onClick={() => {
+                                                    navigate(`/list/${item.id}`);
+                                                }}
+                                            >
+                                                자세히 보기
+                                            </Button.MultiButton>
+                                        </div>
+                                    </StList>
                                     <div>
-                                        <Button.MultiButton
-                                            onClick={() => {
-                                                navigate(`/list/${item.id}`);
-                                            }}
-                                        >
-                                            자세히 보기
-                                        </Button.MultiButton>
+                                        <StGoingDone>{item.isDone ? '🔴' : '🟢'}</StGoingDone>
+                                        <StGoingDone2>
+                                            {item.isDone ? '마감' : '모집중'}
+                                        </StGoingDone2>
                                     </div>
-                                </StList>
-                                <div>
-                                    <StGoingDone>{item.isDone ? '🔴' : '🟢'}</StGoingDone>
-                                    <StGoingDone2>{item.isDone ? '마감' : '모집중'}</StGoingDone2>
-                                </div>
-                            </StListBoxLayout>
-                        </StListBox>
-                    );
-                })}
+                                </StListBoxLayout>
+                            </StListBox>
+                        );
+                    })}
 
-                <StPlusBtn
-                    onClick={() => {
-                        navigate(`/input`);
-                    }}
-                >
-                    <h2>➕</h2>
-                </StPlusBtn>
-            </StListContainer>
+                    <StPlusBtn
+                        onClick={() => {
+                            navigate(`/input`);
+                        }}
+                    >
+                        <h2>➕</h2>
+                    </StPlusBtn>
+                </StListContainer>
+            )}
         </>
     );
 }

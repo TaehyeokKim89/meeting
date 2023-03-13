@@ -1,19 +1,17 @@
 import React from 'react';
 import { useInputs } from '../hooks/Inputs';
 import { useNavigate } from 'react-router-dom';
-import { addMeetings } from '../api/meetings';
-import { useMutation, useQueryClient } from 'react-query';
 import styled from 'styled-components';
 import { StBtn } from './styled';
-import useAuthorization from '../hooks/Auth';
+import { __addMeetings } from '../redux/config/modules/meetingsSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 function Input() {
-    useAuthorization();
-    const queryClient = useQueryClient();
-    const mutation = useMutation(addMeetings, {
-        onSuccess: () => {
-            queryClient.invalidateQueries('meetings');
-        },
+    const dispatch = useDispatch();
+
+    const { isLoading, error } = useSelector((state) => {
+        console.log(state);
+        return state.meetingsSlice;
     });
 
     const [meetingName, onNameHandler, setMeetingName] = useInputs('');
@@ -32,13 +30,20 @@ function Input() {
             isDone: false,
         };
         event.preventDefault();
-        mutation.mutate(newMeeting);
+        dispatch(__addMeetings(newMeeting));
         setMeetingName('');
         setWhenMeeting('');
         setWhereMeeting('');
         setDetailMeeting('');
         navigate('/');
     };
+
+    if (isLoading) {
+        return <div> 로딩중입니다. </div>;
+    }
+
+    if (error) return;
+
     return (
         <>
             <form onSubmit={onSubmitHandler}>

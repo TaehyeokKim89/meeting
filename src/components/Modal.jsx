@@ -1,45 +1,26 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
 import styled from 'styled-components';
 import { StInputContainer, StInput, StTextArea } from './Input';
 import { StBtn } from './styled';
-import { getMeetings } from '../api/meetings';
 import { useParams } from 'react-router-dom';
 import { useInputs } from '../hooks/Inputs';
-import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { __getMeetings } from '../redux/config/modules/meetingsSlice';
+import { __editDetailMeetings, __getMeetings } from '../redux/config/modules/meetingsSlice';
 
 function Modal() {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(__getMeetings());
-    }, []);
+    }, [dispatch]);
 
-    const { isLoading, error, data } = useSelector((state) => {});
+    const { meetings } = useSelector((state) => {
+        return state.meetingsSlice;
+    });
 
     const params = useParams();
 
-    const queryClient = useQueryClient();
-
-    const foundMeeting = data.find((item) => {
+    const foundMeeting = meetings.find((item) => {
         return item.id === parseInt(params.id);
-    });
-
-    const editMeetings = async (id) => {
-        await axios.patch(`${process.env.REACT_APP_SERVER_URL}/meetings/${id}`, {
-            name: meetingName,
-            when: whenMeeting,
-            where: whereMeeting,
-            desc: detailMeeting,
-        });
-        handleCloseModal();
-    };
-
-    const mutation = useMutation(editMeetings, {
-        onSuccess: () => {
-            queryClient.invalidateQueries('meetings');
-        },
     });
 
     const [meetingName, onNameHandler, setMeetingName] = useInputs(foundMeeting.name);
@@ -65,12 +46,20 @@ function Modal() {
     };
 
     const onSubmitHandler = (event) => {
+        const newMeeting = {
+            name: meetingName,
+            when: whenMeeting,
+            where: whereMeeting,
+            desc: detailMeeting,
+        };
+
         event.preventDefault();
-        mutation.mutate(foundMeeting.id);
+        dispatch(__editDetailMeetings({ id: foundMeeting.id, newMeeting }));
         setMeetingName(meetingName);
         setWhenMeeting(whenMeeting);
         setWhereMeeting(whereMeeting);
         setDetailMeeting(detailMeeting);
+        handleCloseModal();
     };
 
     return (

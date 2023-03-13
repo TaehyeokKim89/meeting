@@ -2,64 +2,45 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Switch } from '@mui/material';
 import Button from './Button';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { getMeetings, deleteMeetings } from '../api/meetings';
-import axios from 'axios';
 import styled from 'styled-components';
 import { StGoingDone, StGoingDone2 } from './styled';
 import Modal from './Modal';
 import useAuthorization from '../hooks/Auth';
 import { useDispatch, useSelector } from 'react-redux';
-import { __getMeetings } from '../redux/config/modules/meetingsSlice';
+import {
+    __deleteMeetings,
+    __editDoneMeetings,
+    __getMeetings,
+} from '../redux/config/modules/meetingsSlice';
 
 function Detail() {
     useAuthorization();
     const params = useParams();
     const navigate = useNavigate();
-    const queryClient = useQueryClient();
-
     const dispatch = useDispatch();
-    const { isLoading, isError, data } = useSelector((state) => {});
 
     useEffect(() => {
         dispatch(__getMeetings());
-    }, []);
+    }, [dispatch]);
 
-    // const { isLoading, isError, data } = useQuery('meetings', getMeetings);
-
-    const editMeetings = async (id) => {
-        await axios.patch(`${process.env.REACT_APP_SERVER_URL}/meetings/${id}`, {
-            isDone: !foundMeeting.isDone,
-        });
-    };
-
-    const mutation = useMutation(deleteMeetings, {
-        onSuccess: () => {
-            queryClient.invalidateQueries('meetings');
-            navigate('/');
-        },
+    const { meetings } = useSelector((state) => {
+        return state.meetingsSlice;
     });
-
-    const mutation2 = useMutation(editMeetings, {
-        onSuccess: () => {
-            queryClient.invalidateQueries('meetings');
-        },
-    });
-
-    const foundMeeting = data.find((item) => {
+    const foundMeeting = meetings?.find((item) => {
         return item.id === parseInt(params.id);
     });
-    const [checked, setChecked] = useState(!foundMeeting.isDone);
+    const [checked, setChecked] = useState(!foundMeeting?.isDone);
 
     const handleChange = (event) => {
         setChecked(event.target.checked);
-        mutation2.mutate(foundMeeting.id);
+        dispatch(__editDoneMeetings({ id: foundMeeting.id, isDone: !foundMeeting?.isDone }));
     };
 
     const deleteButtonHandler = (id) => {
         if (window.confirm('삭제하시겠습니까?') === true) {
-            mutation.mutate(id);
+            dispatch(__deleteMeetings(id));
             alert('삭제 되었습니다.');
+            navigate('/');
         } else {
             alert('취소 되었습니다.');
         }
@@ -68,48 +49,52 @@ function Detail() {
     // if (isLoading) {
     //     return <div>로딩중입니다</div>;
     // }
-    // if (isError) {
+    // if (error) {
     //     return <div>에러 발생!</div>;
     // }
 
     return (
         <>
-            <StDetailContainer>
-                <StDetailMeetingCtn>
-                    <h5>ID : {foundMeeting.id}</h5>
-                    <h1>{foundMeeting.name}</h1>
-                    <h3>{foundMeeting.when}</h3>
-                    <h3>{foundMeeting.where}</h3>
-                    <h2>{foundMeeting.desc}</h2>
-                </StDetailMeetingCtn>
+            {foundMeeting && (
+                <StDetailContainer>
+                    <StDetailMeetingCtn>
+                        <h5>ID : {foundMeeting.id}</h5>
+                        <h1>{foundMeeting.name}</h1>
+                        <h3>{foundMeeting.when}</h3>
+                        <h3>{foundMeeting.where}</h3>
+                        <h2>{foundMeeting.desc}</h2>
+                    </StDetailMeetingCtn>
 
-                <StCheckContainer>
-                    <div>
+                    <StCheckContainer>
                         <div>
-                            <StGoingDone>{foundMeeting.isDone ? '🔴' : '🟢'}</StGoingDone>
-                            <StGoingDone2>{foundMeeting.isDone ? '마감' : '모집중'}</StGoingDone2>
-                        </div>
+                            <div>
+                                <StGoingDone>{foundMeeting.isDone ? '🔴' : '🟢'}</StGoingDone>
+                                <StGoingDone2>
+                                    {foundMeeting.isDone ? '마감' : '모집중'}
+                                </StGoingDone2>
+                            </div>
 
-                        <div>
-                            <Switch
-                                checked={checked}
-                                onChange={handleChange}
-                                inputProps={{ 'aria-label': 'controlled' }}
-                            />
+                            <div>
+                                <Switch
+                                    checked={checked}
+                                    onChange={handleChange}
+                                    inputProps={{ 'aria-label': 'controlled' }}
+                                />
+                            </div>
                         </div>
-                    </div>
-                    <div>
-                        <Modal></Modal>
-                        <Button.MultiButton
-                            onClick={() => {
-                                deleteButtonHandler(foundMeeting.id);
-                            }}
-                        >
-                            모임 삭제
-                        </Button.MultiButton>
-                    </div>
-                </StCheckContainer>
-            </StDetailContainer>
+                        <div>
+                            <Modal></Modal>
+                            <Button.MultiButton
+                                onClick={() => {
+                                    deleteButtonHandler(foundMeeting.id);
+                                }}
+                            >
+                                모임 삭제
+                            </Button.MultiButton>
+                        </div>
+                    </StCheckContainer>
+                </StDetailContainer>
+            )}
         </>
     );
 }
