@@ -1,15 +1,21 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 
-const initialState = [
-    {
-        id: 0,
-        name: '아이언맨',
-        when: '23년 4월 29일',
-        where: '서울',
-        desc: '서울에서 모이자 인원 10명',
-        isDone: false,
-    },
-];
+const initialState = {
+    meetings: [],
+    isLoading: false,
+    isError: false,
+    error: null,
+};
+
+export const __getMeetings = createAsyncThunk('getMeetings', async (payload, thunkAPI) => {
+    try {
+        const response = await axios.get('http://localhost:4000/meetings');
+        return thunkAPI.fulfillWithValue(response.data);
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error);
+    }
+});
 
 const meetingsSlice = createSlice({
     name: 'meetingList',
@@ -30,6 +36,23 @@ const meetingsSlice = createSlice({
                 }
             });
         },
+    },
+    extraReducers(builder) {
+        builder
+            .addCase(__getMeetings.pending, (state, action) => {
+                state.isLoading = true;
+                state.isError = false;
+            })
+            .addCase(__getMeetings.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isError = false;
+                state.meetings = action.payload;
+            })
+            .addCase(__getMeetings.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.error = action.payload;
+            });
     },
 });
 

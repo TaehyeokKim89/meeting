@@ -1,30 +1,37 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Button from './Button';
 import styled from 'styled-components';
-import { getMeetings } from '../api/meetings';
-import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { StGoingDone, StGoingDone2 } from './styled';
-import useAuthorization from '../hooks/Auth';
-
+import { __getMeetings } from '../redux/config/modules/meetingsSlice';
+import { getMeetings } from '../api/meetings';
+import { useDispatch, useSelector } from 'react-redux';
+import { useQuery } from 'react-query';
 function List() {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    // useAuthorization();
 
-    useAuthorization();
-    const { isLoading, isError, data } = useQuery('meetings', getMeetings);
+    useEffect(() => {
+        dispatch(__getMeetings());
+    }, []);
+
+    const { isLoading, error, meetings } = useSelector((state) => {
+        return state.meetingsSlice;
+    });
 
     if (isLoading) {
         return <div>로딩 중입니다</div>;
     }
 
-    if (isError) {
+    if (error) {
         return <div>에러 발생!</div>;
     }
 
     return (
         <>
             <StListContainer>
-                {data?.map((item) => {
+                {meetings?.map((item) => {
                     return (
                         <StListBox key={item.id}>
                             <StListBoxLayout>

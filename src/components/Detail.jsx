@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Switch } from '@mui/material';
 import Button from './Button';
@@ -9,6 +9,8 @@ import styled from 'styled-components';
 import { StGoingDone, StGoingDone2 } from './styled';
 import Modal from './Modal';
 import useAuthorization from '../hooks/Auth';
+import { useDispatch, useSelector } from 'react-redux';
+import { __getMeetings } from '../redux/config/modules/meetingsSlice';
 
 function Detail() {
     useAuthorization();
@@ -16,7 +18,14 @@ function Detail() {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
 
-    const { isLoading, isError, data } = useQuery('meetings', getMeetings);
+    const dispatch = useDispatch();
+    const { isLoading, isError, data } = useSelector((state) => {});
+
+    useEffect(() => {
+        dispatch(__getMeetings());
+    }, []);
+
+    // const { isLoading, isError, data } = useQuery('meetings', getMeetings);
 
     const editMeetings = async (id) => {
         await axios.patch(`${process.env.REACT_APP_SERVER_URL}/meetings/${id}`, {
@@ -56,12 +65,12 @@ function Detail() {
         }
     };
 
-    if (isLoading) {
-        return <div>로딩중입니다</div>;
-    }
-    if (isError) {
-        return <div>에러 발생!</div>;
-    }
+    // if (isLoading) {
+    //     return <div>로딩중입니다</div>;
+    // }
+    // if (isError) {
+    //     return <div>에러 발생!</div>;
+    // }
 
     return (
         <>

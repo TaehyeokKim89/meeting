@@ -22,7 +22,7 @@ function Login() {
     const [getPw, onGetPwHandler, setGetPw] = useInputs('');
 
     const logInData = async () => {
-        const expiryDate = new Date(Date.now() + 10 * 60 * 1000);
+        const expiryDate = new Date(Date.now() + 100 * 60 * 1000);
         try {
             const response = await axios.post('http://3.38.191.164/login', {
                 id: getId,

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import styled from 'styled-components';
 import { StInputContainer, StInput, StTextArea } from './Input';
@@ -7,9 +7,16 @@ import { getMeetings } from '../api/meetings';
 import { useParams } from 'react-router-dom';
 import { useInputs } from '../hooks/Inputs';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { __getMeetings } from '../redux/config/modules/meetingsSlice';
 
 function Modal() {
-    const { data } = useQuery('meetings', getMeetings);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(__getMeetings());
+    }, []);
+
+    const { isLoading, error, data } = useSelector((state) => {});
 
     const params = useParams();
 
