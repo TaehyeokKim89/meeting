@@ -1,47 +1,39 @@
 {
-  "meetings": [
-    {
-      "name": "영화 볼 사람!",
-      "when": "2023-02-26",
-      "where": "CGV",
-      "desc": "앤트맨 3 보러 갑시다",
-      "isDone": true,
-      "id": 3
-    },
-    {
-      "name": "등산 갑시다",
-      "when": "2023-02-26",
-      "where": "한라산",
-      "desc": "한라산 등반합시다!!",
-      "isDone": false,
-      "id": 4,
-      "true": "",
-      "requestId": "RvcFwkOv7M6mjrWK8x7ZO",
-      "signal": {}
-    },
-    {
-      "name": "저녁 먹을 사람",
-      "when": "2023-03-14",
-      "where": "서울",
-      "desc": "저메추!",
-      "isDone": false,
-      "id": 5
-    },
-    {
-      "name": "야구 볼 사람",
-      "when": "2023-03-18",
-      "where": "야구장",
-      "desc": "야구 야구",
-      "isDone": true,
-      "id": 6
-    },
-    {
-      "name": "444",
-      "when": "2023-03-15",
-      "where": "44",
-      "desc": "444",
-      "isDone": false,
-      "id": 7
-    }
-  ]
+    "meetings": [
+        {
+            "name": "영화 볼 사람!",
+            "when": "2023-02-26",
+            "where": "CGV",
+            "desc": "앤트맨 3 보러 갑시다",
+            "isDone": true,
+            "id": 3
+        },
+        {
+            "name": "등산 갑시다",
+            "when": "2023-02-26",
+            "where": "한라산",
+            "desc": "한라산 등반합시다!!",
+            "isDone": false,
+            "id": 4,
+            "true": "",
+            "requestId": "RvcFwkOv7M6mjrWK8x7ZO",
+            "signal": {}
+        },
+        {
+            "name": "저녁 먹을 사람",
+            "when": "2023-03-14",
+            "where": "서울",
+            "desc": "저메추!",
+            "isDone": false,
+            "id": 5
+        },
+        {
+            "name": "야구 볼 사람",
+            "when": "2023-03-18",
+            "where": "야구장",
+            "desc": "야구 야구",
+            "isDone": true,
+            "id": 6
+        }
+    ]
 }
