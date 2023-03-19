@@ -5,6 +5,7 @@ import Register from '../pages/Register';
 import Home from '../pages/Home';
 import InputMeeting from '../pages/InputMeeting';
 import DetailMeeting from '../pages/DetailMeeting';
+import TestPg from '../pages/TestPg';
 
 function Router() {
     return (
@@ -15,6 +16,7 @@ function Router() {
                 <Route path="/list/:id" element={<DetailMeeting />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/test" element={<TestPg />} />
             </Routes>
         </BrowserRouter>
     );

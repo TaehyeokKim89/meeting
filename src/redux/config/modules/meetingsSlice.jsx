@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export const __getMeetings = createAsyncThunk('getMeetings', async (thunkAPI) => {
+export const __getMeetings = createAsyncThunk('getMeetings', async (payload, thunkAPI) => {
     try {
         const response = await axios.get('http://localhost:4000/meetings');
         return thunkAPI.fulfillWithValue(response.data);
