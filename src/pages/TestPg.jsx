@@ -4,7 +4,6 @@ import LNB from '../components/Lnb';
 function TestPg() {
     return (
         <>
-            <div>TestPg</div>
             <LNB />
         </>
     );
