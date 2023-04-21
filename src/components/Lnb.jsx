@@ -73,11 +73,6 @@ const LnbLayout = styled.div`
                 width: 100%;
                 height: 2px;
                 background-color: #333;
-                /* position: absolute;
-                left: 0;
-                top: 50%;
-                transform: translateY(-50%); */
-                /* transition: transform 0.3s ease; */
             }
 
             .line:nth-child(2) {
