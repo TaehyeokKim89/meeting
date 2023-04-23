@@ -16,13 +16,11 @@ function Modal() {
     const { meetings } = useSelector((state) => {
         return state.meetingsSlice;
     });
-
     const params = useParams();
 
     const foundMeeting = meetings.find((item) => {
         return item.id === parseInt(params.id);
     });
-
     const [meetingName, onNameHandler, setMeetingName] = useInputs(foundMeeting.name);
     const [whenMeeting, onWhenHandler, setWhenMeeting] = useInputs(foundMeeting.when);
     const [whereMeeting, onWhereHandler, setWhereMeeting] = useInputs(foundMeeting.where);
