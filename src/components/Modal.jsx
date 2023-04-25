@@ -42,7 +42,6 @@ function Modal() {
             setShowModal(false);
         }
     };
-
     const onSubmitHandler = (event) => {
         const newMeeting = {
             name: meetingName,
@@ -50,7 +49,6 @@ function Modal() {
             where: whereMeeting,
             desc: detailMeeting,
         };
-
         event.preventDefault();
         dispatch(__editDetailMeetings({ id: foundMeeting.id, newMeeting }));
         setMeetingName(meetingName);
