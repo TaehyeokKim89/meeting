@@ -46,13 +46,6 @@ function Detail() {
         }
     };
 
-    // if (isLoading) {
-    //     return <div>로딩중입니다</div>;
-    // }
-    // if (error) {
-    //     return <div>에러 발생!</div>;
-    // }
-
     return (
         <>
             {foundMeeting && (
